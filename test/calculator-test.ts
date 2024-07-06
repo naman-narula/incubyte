@@ -33,4 +33,8 @@ describe('Tests for addition operation of calculator', function () {
     it("should support different delimiters", function () {
         expect(add("//;\n1;2;3;4;5")).equals(15);
     })
+
+    it("should throw an exception on negative numbers", function () {
+        expect(() => add("//:\n1:2:-3:-4:5")).to.throw(/negative numbers not allowed -3,-4/);
+    })
 });
