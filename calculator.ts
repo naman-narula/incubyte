@@ -3,7 +3,7 @@ export function add(expression: string): number {
     return 0;
   }
 
-  const operands = expression.split(',').map((ele) => Number.parseInt(ele));
+  const operands = expression.split(/[,\n]/).map((ele) => Number.parseInt(ele));
   return operands.reduce((sum, operand) => {
     return sum + operand;
   }, 0);
