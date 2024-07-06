@@ -9,4 +9,8 @@ describe('Tests for addition operation of calculator', function () {
     it("should return same number on single input", function () {
         expect(add("1")).equals(1);
     })
+
+    it("should add two numbers seperated by comma", function () {
+        expect(add("5,6")).equals(11)
+    })
 });
