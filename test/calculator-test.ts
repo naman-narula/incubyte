@@ -37,4 +37,8 @@ describe('Tests for addition operation of calculator', function () {
     it("should throw an exception on negative numbers", function () {
         expect(() => add("//:\n1:2:-3:-4:5")).to.throw(/negative numbers not allowed -3,-4/);
     })
+
+    it("should not add number greater than 1000", function () {
+        expect(add("1,2,1001")).equals(3);
+    })
 });
