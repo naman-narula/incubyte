@@ -12,6 +12,12 @@ export function add(expression: string): number {
   const operands = expression
     .split(delimiter)
     .map((ele) => Number.parseInt(ele));
+  const negativeNumbers = operands.filter((ele) => ele < 0);
+  if (negativeNumbers.length > 0) {
+    throw new Error(
+      `negative numbers not allowed ${negativeNumbers.toString()}`
+    );
+  }
   return operands.reduce((sum, operand) => {
     return sum + operand;
   }, 0);
