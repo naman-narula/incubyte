@@ -11,7 +11,8 @@ export function add(expression: string): number {
   }
   const operands = expression
     .split(delimiter)
-    .map((ele) => Number.parseInt(ele));
+    .map((ele) => Number.parseInt(ele))
+    .filter((ele) => ele <= 1000);
   const negativeNumbers = operands.filter((ele) => ele < 0);
   if (negativeNumbers.length > 0) {
     throw new Error(
