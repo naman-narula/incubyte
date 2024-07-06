@@ -1,0 +1,21 @@
+{
+  "name": "tdd-kata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "ts-mocha test/*.ts"
+  },
+  "author": "naman-narula",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.7",
+    "chai": "^4.4.1",
+    "mocha": "^10.6.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.5.3"
+  }
+}
