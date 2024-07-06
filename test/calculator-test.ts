@@ -29,4 +29,8 @@ describe('Tests for addition operation of calculator', function () {
     it("should handle new line character between numbers", function () {
         expect(add("1\n2,3\n4\n5\n6,7,8\n9")).equals(45);
     })
+
+    it("should support different delimiters", function () {
+        expect(add("//;\n1;2;3;4;5")).equals(15);
+    })
 });
