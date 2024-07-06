@@ -13,4 +13,16 @@ describe('Tests for addition operation of calculator', function () {
     it("should add two numbers seperated by comma", function () {
         expect(add("5,6")).equals(11)
     })
+
+    it("should add all numbers in the experession", function () {
+        let randomRange = Math.floor(Math.random() * (13)) + 3;
+        let expression = "";
+        let sum = 0;
+        for (let i = 1; i <= randomRange; i++) {
+            expression += (i.toString() + ',')
+            sum += i;
+        }
+        expression = expression.replace(/,$/, "")
+        expect(add(expression)).equals(sum);
+    })
 });
