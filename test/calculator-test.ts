@@ -25,4 +25,8 @@ describe('Tests for addition operation of calculator', function () {
         expression = expression.replace(/,$/, "")
         expect(add(expression)).equals(sum);
     })
+
+    it("should handle new line character between numbers", function () {
+        expect(add("1\n2,3\n4\n5\n6,7,8\n9")).equals(45);
+    })
 });
