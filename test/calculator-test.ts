@@ -41,4 +41,8 @@ describe('Tests for addition operation of calculator', function () {
     it("should not add number greater than 1000", function () {
         expect(add("1,2,1001")).equals(3);
     })
+
+    it("should support delimiters of any length",function(){
+        expect(add("//[***]\n1***2***3")).equals(6);
+    })
 });
