@@ -49,4 +49,7 @@ describe('Tests for addition operation of calculator', function () {
     it("should support multiple delimiter", function() {
         expect(add("//[*][%]\n1*2%3")).equals(6);
     })
+    it("should support multiple delimiter of any length", function() {
+        expect(add("//[***][%%]\n1***2%%3")).equals(6);
+    })
 });
