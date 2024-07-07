@@ -5,12 +5,30 @@ export function add(expression: string): number {
   let delimiter = /[,\n]/;
   if (expression.startsWith('//')) {
     const delimterEndsAt = expression.indexOf('\n');
-    let delimiterString = expression.substring(2, delimterEndsAt);
-    if (delimiterString.length > 1) {
-      delimiterString = delimiterString.slice(1, -1);
+    // delimiterString = [*][%]
+    const delimiterString = expression.substring(2, delimterEndsAt);
+    //delimiters = ["*","%"]
+    const delimiters = getDelimiters(delimiterString);
+    let stringsForRegexp: { anyLength: string[]; single: string[] } = {
+      anyLength: [],
+      single: []
+    };
+    delimiters.forEach((ele) => {
+      if (ele.length > 1) {
+        stringsForRegexp.anyLength.push(generateStringForRegex(ele));
+      } else {
+        stringsForRegexp.single.push(ele);
+      }
+    });
+
+    let resolvedRegexString = '';
+    if (stringsForRegexp.single.length) {
+      resolvedRegexString = `[${stringsForRegexp.single.join('|')}]`;
     }
-    delimiterString = generateStringForRegex(delimiterString);
-    delimiter = new RegExp(`${delimiterString}`);
+    if (stringsForRegexp.anyLength.length) {
+      resolvedRegexString += `|${stringsForRegexp.anyLength.join('|')}`;
+    }
+    delimiter = new RegExp(resolvedRegexString);
     // expression starts after \n
     expression = expression.substring(delimterEndsAt + 1);
   }
@@ -34,4 +52,7 @@ function generateStringForRegex(delimiter: string): string {
   // delimiter could be a * which is special character. Hence \\
   let result = `\\${delimiter[0]}{${delimiter.length}}`;
   return result;
+}
+function getDelimiters(delimiter: string): string[] {
+  return delimiter.split(/[\[\]]/).filter((ele) => ele.length > 0);
 }
