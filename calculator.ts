@@ -7,28 +7,7 @@ export function add(expression: string): number {
     const delimterEndsAt = expression.indexOf('\n');
     // delimiterString = [*][%]
     const delimiterString = expression.substring(2, delimterEndsAt);
-    //delimiters = ["*","%"]
-    const delimiters = getDelimiters(delimiterString);
-    let stringsForRegexp: { anyLength: string[]; single: string[] } = {
-      anyLength: [],
-      single: []
-    };
-    delimiters.forEach((ele) => {
-      if (ele.length > 1) {
-        stringsForRegexp.anyLength.push(generateStringForRegex(ele));
-      } else {
-        stringsForRegexp.single.push(ele);
-      }
-    });
-
-    let resolvedRegexString = '';
-    if (stringsForRegexp.single.length) {
-      resolvedRegexString = `[${stringsForRegexp.single.join('|')}]`;
-    }
-    if (stringsForRegexp.anyLength.length) {
-      resolvedRegexString += `|${stringsForRegexp.anyLength.join('|')}`;
-    }
-    delimiter = new RegExp(resolvedRegexString);
+    delimiter = new RegExp(resolveRegexString(delimiterString));
     // expression starts after \n
     expression = expression.substring(delimterEndsAt + 1);
   }
@@ -55,4 +34,29 @@ function generateStringForRegex(delimiter: string): string {
 }
 function getDelimiters(delimiter: string): string[] {
   return delimiter.split(/[\[\]]/).filter((ele) => ele.length > 0);
+}
+
+function resolveRegexString(delimiterString: string): string {
+  //delimiters = ["*","%"]
+  const delimiters = getDelimiters(delimiterString);
+  let stringsForRegexp: { anyLength: string[]; single: string[] } = {
+    anyLength: [],
+    single: []
+  };
+  delimiters.forEach((ele) => {
+    if (ele.length > 1) {
+      stringsForRegexp.anyLength.push(generateStringForRegex(ele));
+    } else {
+      stringsForRegexp.single.push(ele);
+    }
+  });
+
+  let resolvedRegexString = '';
+  if (stringsForRegexp.single.length) {
+    resolvedRegexString = `[${stringsForRegexp.single.join('|')}]`;
+  }
+  if (stringsForRegexp.anyLength.length) {
+    resolvedRegexString += `|${stringsForRegexp.anyLength.join('|')}`;
+  }
+  return resolvedRegexString;
 }
